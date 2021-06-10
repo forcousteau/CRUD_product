@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema({
   sellerName: String,
-  fullPrice: Number,
+  fullPrice: String,
   ASIN: String,
   title: String,
   url: String,
   description: String,
-  keyword: [Strings]
+  keyword: String
 })
 
 module.exports = mongoose.model('Products', productSchema);

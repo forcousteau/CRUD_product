@@ -1,21 +1,24 @@
 require('dotenv').config();
-const express = require('express')
-const worker = require('./worker.js')
-const app = express()
+require('./db.js');
+const productController = require('./ProductController.js')
+const express = require('express');
+const worker = require('./worker.js');
+const app = express();
 
-const port = process.env.PORT
+const port = process.env.PORT;
 
-app.use(express.static(__dirname))
+app.use(express.static(__dirname));
 app.use(
   express.urlencoded({
     extended: true
   })
-)
-app.use(express.json())
+);
+app.use(express.json());
 
-app.post('/', (req, res) => {
-  res.send(worker.groupASIN(req.body));
-})
+app.post('/', (req, res) =>
+  productController.createNewProduct(req, res)
+  //res.send(worker.groupASIN(req.body));
+)
 app.get('/favicon.ico', (req, res) => res.status(204));
 app.get('/:asin', (req, res) => {
   res.json(worker.ASINInGroup[req.params.asin])

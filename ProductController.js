@@ -7,3 +7,7 @@ exports.createNewProduct = (req, res) => {
     res.status(201).json(product)
   })
 }
+
+exports.listAllPRoducts = () => {
+
+}
