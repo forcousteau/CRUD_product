@@ -15,25 +15,20 @@ app.use(
 );
 app.use(express.json());
 
-app.post('/', (req, res) =>
-  productController.createNewProduct(req, res)
-  //res.send(worker.groupASIN(req.body));
-)
+
 app.get('/favicon.ico', (req, res) => res.status(204));
-app.get('/:asin', (req, res) => {
-  res.json(worker.ASINInGroup[req.params.asin])
-})
 
-app.put('/asin', (req, res) => {
-  worker.updateASIN(req.body);
-  res.send(worker.ASINInGroup)
-})
+app
+  .route('/')
+  .get((req, res) => productController.listAllPRoducts(req, res))
+  .post((req, res) => productController.createAnArrayOfProduct(req, res))
+  .put((req, res) => productController.createNewProduct(req, res))
 
-app.delete('/asin/:asin', (req, res) => {
-  console.log(req.params.asin)
-  worker.deleteASIN(req.params.asin);
-  res.send('deleted')
-})
+app
+  .route('/:asin')
+  .get((req, res) => productController.listSpecificProducts(req, res))
+  .put((req, res) => productController.updateProduct(req, res))
+  .delete((req, res) => productController.deleteProduct(req, res))
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`)
